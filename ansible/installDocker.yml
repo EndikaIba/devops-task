@@ -1,0 +1,11 @@
+---
+- hosts: all
+  tasks:
+    - name: Installs docker
+      apt: pkg=docker state=installed update_cache=true
+      notify:
+        - start docker
+
+  handlers:
+    - name: start docker
+      service: name=docker state=started

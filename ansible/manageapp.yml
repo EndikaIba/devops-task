@@ -1,0 +1,24 @@
+---
+- hosts: flask-api
+  tasks:
+    - name: start containers
+      docker_container:
+        name: apiContainer
+        image: flaskapi
+        state: started
+      tags: start
+
+    - name: stop containers
+      docker_container:
+        name: apiContainer
+        image: flaskapi
+        state: stopped
+      tags: stop
+
+    - name: restart containers
+      docker_container:
+        name: apiContainer
+        image: flaskapi
+        state: started
+        restart: yes
+      tags: restart

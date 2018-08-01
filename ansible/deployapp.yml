@@ -1,0 +1,20 @@
+---
+- hosts: flask-api
+  tasks:
+    - name: copy app to remote machine
+      synchronize:
+        src: /home/eendika/devops-task
+        dest: /usr/local/bin/flaskapi  
+    - name: build container
+      docker_image:
+        name: flaskapi
+        path: /usr/local/bin/flaskapi/devops-task
+        state: present
+        force: yes
+    - name: run  container
+      docker_container:
+        name: apiContainer
+        image: flaskapi
+        state: started
+        ports:
+        - "5000:5000"
