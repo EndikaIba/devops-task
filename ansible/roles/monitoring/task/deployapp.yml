@@ -1,0 +1,29 @@
+---
+- hosts: flask-api
+  handlers:
+    - name: build container
+      docker_image:
+        name: flaskapi
+        path: /usr/local/bin/flaskapi/files
+        state: present
+        force: yes
+      listen: "new code"
+    - name: run container
+      docker_container:
+        name: apiContainer
+        image: flaskapi
+        state: started
+        volumes:
+          - /proc:/proc_host
+        ports:
+          - " {{port}}:5000"
+      listen: "new code"
+  tasks:
+    - name: copy app to remote machine
+      synchronize:
+        src: /etc/ansible/roles/monitoring/files
+        dest: /usr/local/bin/flaskapi
+      notify: "new code"
+    - name: include variables
+      include_vars:
+        file: main.yml  

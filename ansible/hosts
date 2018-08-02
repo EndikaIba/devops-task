@@ -1,2 +1,3 @@
+#Server with flask api
 [flask-api]
 127.0.0.1   ansible_connection=local
